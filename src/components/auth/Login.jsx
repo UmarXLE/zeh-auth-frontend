@@ -20,10 +20,10 @@ const Login = () => {
         console.log(values);
         setSubmitting(false);
         const sendObj = {
-            name:values.login, 
+            login:values.login, 
             password:values.password
         }
-
+            
         dispatch(LoginFetch(sendObj))
             .then(res => {
                 // const role = res?.payload?.role
@@ -54,6 +54,14 @@ const Login = () => {
         if(role === "ADMIN"){
             console.log(role, "succes logins")
             router.push("/admin")
+        }
+        if(role === "manager"){
+            console.log(role, "succes logins")
+            router.push("/manager")
+        }
+        if(role === "director"){
+            console.log(role, "succes logins")
+            router.push("/director")
         }
     },[role])
 

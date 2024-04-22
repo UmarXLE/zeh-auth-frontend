@@ -3,10 +3,13 @@ import { Box, Typography } from '@mui/material';
 import Link from 'next/link';
 import React from 'react';
 import { roles } from "../../utils/variables";
+import styled from '@emotion/styled';
+import { usePathname } from 'next/navigation';
+
 
 const Navbar = () => {
-
-    const role = "admin"
+    const pathname = usePathname()
+    const role = "director"
 
     const prefixLinks = (links, prefix) => {
         return links?.map((item) => ({
@@ -16,6 +19,7 @@ const Navbar = () => {
     };
 
     const userLinks = prefixLinks(roles[role], '/' + role);
+    console.log("userLinks=",userLinks)
 
     return (
         <Box sx={{ width: "300px", borderRight: "4px solid #495ba4", position: "fixed", height: "100vh", display: "flex", alignItems: "center", flexDirection: "column", padding: "20px 0" }}>
@@ -25,7 +29,7 @@ const Navbar = () => {
 
             <Box sx={{ padding: "20px", width: "100%", display: "flex", flexDirection: "column", gap: "15px", justifyContent: "start" }}>
                 {userLinks?.map((item) => (
-                    <Link style={{ textDecoration: "none", color: "white", backgroundColor: "#495ba4", borderRadius: "10px", padding: "10px" }} href={item.link} key={item.title}>{item.title}</Link>
+                    <Link className={pathname === item?.link ? "active" : ""} style={{ textDecoration: "none", color: pathname === item?.link ? "#495ba4" : "white", backgroundColor: pathname === item?.link ? "transparent" : "#495ba4", borderRadius: "10px", padding: "10px" , border: pathname === item?.link ? "2px solid #495ba4" : "2px solid white" }} href={item.link} key={item.title}>{item.title}</Link>
                 ))}
             </Box>
         </Box>
@@ -33,3 +37,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

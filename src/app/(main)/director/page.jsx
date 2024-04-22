@@ -1,11 +1,11 @@
 import React from 'react';
 
-const StatisticAdmin = () => {
+const DirectorPage = () => {
     return (
         <div>
-            stats
+            director
         </div>
     );
 };
 
-export default StatisticAdmin;
+export default DirectorPage;

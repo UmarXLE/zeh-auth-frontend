@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Orders = () => {
+const Loading = () => {
     return (
         <div>
-            Orders
+            loading...
         </div>
     );
 };
 
-export default Orders;
+export default Loading;

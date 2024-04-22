@@ -2,6 +2,7 @@ import { Montserrat } from "next/font/google";
 import "./globals.css";
 import ProviderStore from "@/store/ProviderStore";
 import { ToastContainer } from "react-toastify";
+import { Suspense } from "react";
 
 const inter = Montserrat({ subsets: ["latin"] });
 
@@ -16,7 +17,9 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <ToastContainer/>
         <ProviderStore>
-          {children}
+          <Suspense fallback={<div>Loading...</div>}>
+            {children}
+          </Suspense>
         </ProviderStore>
       </body>
     </html>

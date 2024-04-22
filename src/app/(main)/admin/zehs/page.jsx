@@ -7,7 +7,8 @@ import CreateZehsClient from '@/components/admin/zehs/CreateZehsClient';
 import ZehsTable from '@/components/tables/admin/zehs/ZehsTable';
 import axiosInstance from '@/services/axios';
 
-const ZehsPage = ({ data }) => {
+
+const ZehsPage = () => {
     return (
         <Box>
             <BreadCrums links={[{ label: "Цеха", url: -1 }]}/>
@@ -17,27 +18,10 @@ const ZehsPage = ({ data }) => {
                     <CreateZehsClient />
                 </Box>
             </Box>
-            <ZehsTable data={data}/>
+            <ZehsTable/>
         </Box>
     );
 };
 
-// export async function getServerSideProps() {
-//     try {
-//         const { data } = await axiosInstance.get("zehs");
-//         return {
-//             props: {
-//                 data
-//             }
-//         };
-//     } catch (error) {
-//         console.error("Error fetching data:", error);
-//         return {
-//             props: {
-//                 data: []
-//             }
-//         };
-//     }
-// }
 
 export default ZehsPage;
