@@ -3,6 +3,7 @@ import "./globals.css";
 import ProviderStore from "@/store/ProviderStore";
 import { ToastContainer } from "react-toastify";
 import { Suspense } from "react";
+import Loader from "@/ui/Loader";
 
 const inter = Montserrat({ subsets: ["latin"] });
 
@@ -17,7 +18,7 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <ToastContainer/>
         <ProviderStore>
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Loader/>}>
             {children}
           </Suspense>
         </ProviderStore>

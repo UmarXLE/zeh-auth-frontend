@@ -18,6 +18,8 @@ import ShareIcon from '@mui/icons-material/Share';
 import ProfileIcon from "@mui/icons-material/Person"
 import SettingIcon from "@mui/icons-material/Settings"
 import LogoutIcon from "@mui/icons-material/Login"
+import ModalWindow from './ModalWindow';
+import Logout from '@/components/navigation/Logout';
 
 const StyledSpeedDial = styled(SpeedDial)(({ theme }) => ({
   position: 'absolute',
@@ -40,6 +42,17 @@ const actions = [
 export default function PopupProfile() {
   const [direction, setDirection] = React.useState('down');
   const [hidden, setHidden] = React.useState(false);
+  const [modal, setModal] = React.useState({
+    open: false,
+    actions: ""
+  })
+
+  const handleClose = () => {
+    setModal({
+      open: false,
+    })
+  }
+
 
   const handleDirectionChange = (event) => {
     setDirection(event.target.value);
@@ -49,24 +62,40 @@ export default function PopupProfile() {
     setHidden(event.target.checked);
   };
 
+  const handleAction = (action) => {
+    console.log(action);
+    setModal({
+      open: true,
+      actions: action.name
+    })
+  }
+
   return (
-    <Box sx={{ transform: 'translateZ(0px)', flexGrow: 1 }}>
-      <Box sx={{ position: 'fixed', mt: -5, height: 100 , top: -80 , right:"30px" }}>
-        <StyledSpeedDial
-          ariaLabel="SpeedDial playground example"
-          hidden={hidden}
-          icon={<SpeedDialIcon />}
-          direction={direction}
-        >
-          {actions.map((action) => (
-            <SpeedDialAction
-              key={action.name}
-              icon={action.icon}
-              tooltipTitle={action.name}
-            />
-          ))}
-        </StyledSpeedDial>
+    <>
+      <ModalWindow open={modal.open} handleClose={handleClose} handleAction={handleAction}>
+        {
+          modal.actions === "Profile" ? <p>Profile</p> : modal.actions === "Settings" ? <p>Settings</p> : <Logout close={handleClose}/>
+        }
+      </ModalWindow>
+      <Box sx={{ transform: 'translateZ(0px)', flexGrow: 1 }}>
+        <Box sx={{ position: 'fixed', mt: -5, height: 100, top: -80, right: "30px" }}>
+          <StyledSpeedDial
+            ariaLabel="SpeedDial playground example"
+            hidden={hidden}
+            icon={<SpeedDialIcon />}
+            direction={direction}
+          >
+            {actions.map((action) => (
+              <SpeedDialAction
+                key={action.name}
+                icon={action.icon}
+                tooltipTitle={action.name}
+                onClick={() => handleAction(action)}
+              />
+            ))}
+          </StyledSpeedDial>
+        </Box>
       </Box>
-    </Box>
+    </>
   );
 }
