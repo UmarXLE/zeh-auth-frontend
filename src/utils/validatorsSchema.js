@@ -15,7 +15,6 @@ export const validatorZehsCreateShema = Yup.object().shape({
   id: Yup.string().max(4, 'Пароль должен содержать максимум 4 символов').required('Введите id цеха'),
 });
 
-
 export const validatorUserCreateShema = Yup.object().shape({
   login: Yup.string()
   .matches(/^[a-zA-Z0-9_-]+$/, 'Логин может содержать только буквы, цифры, дефис и подчеркивание')
@@ -24,3 +23,9 @@ export const validatorUserCreateShema = Yup.object().shape({
   name: Yup.string().min(2, 'Имя должно содержать минимум 2 символа').required('Введите имя'),
   role: Yup.string().required('Выберите роль'),
 })
+
+export const validatorRolesSchema = Yup.object().shape({
+  name: Yup.string()
+  .matches(/^[a-zA-Z0-9_-]+$/, 'Роль может содержать только буквы, цифры, дефис и подчеркивание')
+  .required('Введите логин'),
+});

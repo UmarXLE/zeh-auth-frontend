@@ -1,6 +1,6 @@
 import axiosInstance from "@/services/axios";
 import { createSlice , createAsyncThunk } from "@reduxjs/toolkit";
-
+import Cookies from "js-cookie";
 // requests 
 
 export const LoginFetch = createAsyncThunk(
@@ -9,6 +9,11 @@ export const LoginFetch = createAsyncThunk(
         try {
             console.log("success request");
             const {data} = await axiosInstance.post("auth/login" , props)
+            // Cookies.set('token', data?.access_token, { expires: 7 });
+            // Cookies.set('role', data?.role, { expires: 7 });
+            console.log("data login=",data);
+            Cookies.set("role", data?.role, { expires: 7 });
+            Cookies.set("token", data?.token, { expires: 7 });
             return data
         } catch (error) {
             return rejectWithValue(error?.detail)

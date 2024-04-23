@@ -50,20 +50,36 @@ const Login = () => {
     //     }
     // },[login_status])
 
-    useEffect(() => {
-        if(role === "ADMIN"){
-            console.log(role, "succes logins")
-            router.push("/admin")
-        }
-        if(role === "manager"){
-            console.log(role, "succes logins")
-            router.push("/manager")
-        }
-        if(role === "director"){
-            console.log(role, "succes logins")
-            router.push("/director")
-        }
-    },[role])
+    // useEffect(() => {
+    //     if(role === "ADMIN"){
+    //         console.log(role, "succes logins")
+    //         router.push("/admin")
+    //     }
+    //     if(role === "manager"){
+    //         console.log(role, "succes logins")
+    //         router.push("/manager")
+    //     }
+    //     if(role === "director"){
+    //         console.log(role, "succes logins")
+    //         router.push("/director")
+    //     }
+    //     if(role === "tehnolog"){
+    //         console.log(role, "succes logins")
+    //         router.push("/tehnolog")
+    //     }
+    //     if(role === "cutter"){
+    //         console.log(role, "succes logins")
+    //         router.push("/cutter")
+    //     }
+    //     if(role === "dressmaker"){
+    //         console.log(role, "succes logins")
+    //         router.push("/dressmaker")
+    //     }
+    //     if(role === "ironer"){
+    //         console.log(role, "succes logins")
+    //         router.push("/ironer")
+    //     }
+    // },[role])
 
     return (
         <Formik

@@ -13,5 +13,21 @@ export const roles = {
         { title: "Клиенты", link: "/clients" },
         { title: "Настройки", link: "/settings" },
         { title: "Статистика", link: "/statistic" }
+    ],
+    ironer: [
+        { title: "Отчеты", link: "/reports" },
+    ],
+    manager: [
+        { title: "Отчеты", link: "/reports" },
+    ],
+    tehnolog:[
+        { title: "Отчеты", link: "/reports" },
+    ],
+    cutter:[
+        { title: "Отчеты", link: "/reports" },
+    ],
+    dressmaker:[
+        { title: "Отчеты", link: "/reports" },
     ]
+
 };

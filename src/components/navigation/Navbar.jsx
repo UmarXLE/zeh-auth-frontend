@@ -1,15 +1,17 @@
 "use client";
 import { Box, Typography } from '@mui/material';
 import Link from 'next/link';
-import React from 'react';
+import React , {useEffect , useState} from 'react';
 import { roles } from "../../utils/variables";
 import styled from '@emotion/styled';
 import { usePathname } from 'next/navigation';
+import Cookies from 'js-cookie';
 
 
 const Navbar = () => {
     const pathname = usePathname()
-    const role = "director"
+    const [role , setRole] = useState("")
+    console.log("role in navbar",role);
 
     const prefixLinks = (links, prefix) => {
         return links?.map((item) => ({
@@ -17,9 +19,13 @@ const Navbar = () => {
             link: prefix + item.link
         }));
     };
+    
+    useEffect(() => {
+        const role = Cookies.get('role')
+        setRole(role)
+    },[])
 
     const userLinks = prefixLinks(roles[role], '/' + role);
-    console.log("userLinks=",userLinks)
 
     return (
         <Box sx={{ width: "300px", borderRight: "4px solid #495ba4", position: "fixed", height: "100vh", display: "flex", alignItems: "center", flexDirection: "column", padding: "20px 0" }}>
