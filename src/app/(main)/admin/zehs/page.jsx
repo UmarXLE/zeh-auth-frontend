@@ -5,8 +5,6 @@ import { Box } from '@mui/system';
 import Title from '@/ui/Title';
 import CreateZehsClient from '@/components/admin/zehs/CreateZehsClient';
 import ZehsTable from '@/components/tables/admin/zehs/ZehsTable';
-import axiosInstance from '@/services/axios';
-
 
 const ZehsPage = () => {
     return (
@@ -22,6 +20,7 @@ const ZehsPage = () => {
         </Box>
     );
 };
+
 
 
 export default ZehsPage;

@@ -50,36 +50,36 @@ const Login = () => {
     //     }
     // },[login_status])
 
-    // useEffect(() => {
-    //     if(role === "ADMIN"){
-    //         console.log(role, "succes logins")
-    //         router.push("/admin")
-    //     }
-    //     if(role === "manager"){
-    //         console.log(role, "succes logins")
-    //         router.push("/manager")
-    //     }
-    //     if(role === "director"){
-    //         console.log(role, "succes logins")
-    //         router.push("/director")
-    //     }
-    //     if(role === "tehnolog"){
-    //         console.log(role, "succes logins")
-    //         router.push("/tehnolog")
-    //     }
-    //     if(role === "cutter"){
-    //         console.log(role, "succes logins")
-    //         router.push("/cutter")
-    //     }
-    //     if(role === "dressmaker"){
-    //         console.log(role, "succes logins")
-    //         router.push("/dressmaker")
-    //     }
-    //     if(role === "ironer"){
-    //         console.log(role, "succes logins")
-    //         router.push("/ironer")
-    //     }
-    // },[role])
+    useEffect(() => {
+        if(role === "ADMIN"){
+            console.log(role, "succes logins")
+            router.replace("/admin")
+        }
+        if(role === "manager"){
+            console.log(role, "succes logins")
+            router.replace("/manager")
+        }
+        if(role === "director"){
+            console.log(role, "succes logins")
+            router.replace("/director")
+        }
+        if(role === "tehnolog"){
+            console.log(role, "succes logins")
+            router.replace("/tehnolog")
+        }
+        if(role === "cutter"){
+            console.log(role, "succes logins")
+            router.replace("/cutter")
+        }
+        if(role === "dressmaker"){
+            console.log(role, "succes logins")
+            router.replace("/dressmaker")
+        }
+        if(role === "ironer"){
+            console.log(role, "succes logins")
+            router.replace("/ironer")
+        }
+    },[role])
 
     return (
         <Formik

@@ -1,21 +1,24 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Box
-} from '@mui/material';
+import {  Table,  TableBody,  TableCell,  TableContainer,  TableHead,  TableRow,  Box} from '@mui/material';
 import { PendingTable } from '@/utils';
+import { useDispatch } from 'react-redux';
+import { getZehsList } from '@/store/admin/adminSlice';
 
-const ZehsTable = ({ data, status , userProvider }) => {
+const thStyle = { borderBottom: "1px solid #E2E8F0", textAlign: "start", padding: "14px 18px", whiteSpace: "nowrap" };
+const tdStyle = { border: "1px solid #E2E8F0", textAlign: "start", padding: "14px 20px", cursor: "pointer", whiteSpace: "nowrap" }
 
-  const thStyle = { borderBottom: "1px solid #E2E8F0", textAlign: "start", padding: "14px 18px", whiteSpace: "nowrap" };
-  const tdStyle = { border: "1px solid #E2E8F0", textAlign: "start", padding: "14px 20px", cursor: "pointer", whiteSpace: "nowrap" }
+const ZehsTable = ({ status, userProvider }) => {
+  const dispatch = useDispatch()
+
+  const [data , setData] = useState([])
+
+  useEffect(() => {
+    dispatch(getZehsList())
+      .then(res => setData(res?.payload))
+  },[])
+  
 
   return (
     <Wrapper>
@@ -23,8 +26,6 @@ const ZehsTable = ({ data, status , userProvider }) => {
         <Table>
           <TableHead>
             <TableRow sx={{ background: "rgba(248, 250, 252, 1)" }}>
-              <TableCell sx={thStyle}>Номер статуса</TableCell>
-              <TableCell sx={thStyle}>Название  </TableCell>
               <TableCell sx={thStyle}>Логин </TableCell>
               <TableCell sx={thStyle}>ID </TableCell>
               {/* <TableCell sx={thStyle}>Действие</TableCell> */}
@@ -36,16 +37,8 @@ const ZehsTable = ({ data, status , userProvider }) => {
                 data?.length > 0 && data?.map((row) => {
                   return (
                     <TableRow key={row?.id} hover>
-                      <TableCell sx={tdStyle}>{row?.id}</TableCell>
-                      <TableCell sx={tdStyle}>{row?.title}</TableCell>
-                      <TableCell sx={tdStyle}>{row?.discount} %</TableCell>
-                      <TableCell sx={tdStyle} >
-                          <Box component="span" sx={{
-                              borderRadius: "20px", padding: "6px 14px", background: row?.is_active ? "#D1FAE580" : "#FFE4E680", color: row.is_active ? "#059691" : "#E11D48"
-                          }}>{row.is_active ? "Актив" : "Неактив"}
-                        </Box>
-                      </TableCell>
-                      {/* <TableCell sx={tdStyle}><Edit onClick={() => navigate(`${row?.id}/edit`)} /></TableCell> */}
+                      <TableCell sx={tdStyle}>{row?.login} </TableCell>
+                      <TableCell sx={tdStyle}>{row?.id} </TableCell>
                     </TableRow>
                   );
                 })

@@ -1,114 +1,79 @@
 "use client"
-import * as React from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { TableVirtuoso } from 'react-virtuoso';
+import React, { useEffect, useState } from 'react';
+import styled from '@emotion/styled';
+import {  Table,  TableBody,  TableCell,  TableContainer,  TableHead,  TableRow,  Box} from '@mui/material';
+import { PendingTable } from '@/utils';
+import { useDispatch } from 'react-redux';
+import { getUsersList } from '@/store/admin/adminSlice';
 
-const sample = [
-  ['Frozen yoghurt', 159, 6.0, 24, 4.0],
-  ['Ice cream sandwich', 237, 9.0, 37, 4.3],
-  ['Eclair', 262, 16.0, 24, 6.0],
-  ['Cupcake', 305, 3.7, 67, 4.3],
-  ['Gingerbread', 356, 16.0, 49, 3.9],
-];
+const thStyle = { borderBottom: "1px solid #E2E8F0", textAlign: "start", padding: "14px 18px", whiteSpace: "nowrap" };
+const tdStyle = { border: "1px solid #E2E8F0", textAlign: "start", padding: "14px 20px", cursor: "pointer", whiteSpace: "nowrap" }
 
-function createData(id, dessert, calories, fat, carbs, protein) {
-  return { id, dessert, calories, fat, carbs, protein };
-}
+const UsersTable = ({ status, userProvider }) => {
+  const dispatch = useDispatch()
 
-const columns = [
-  {
-    width: 140,
-    label: 'Имя',
-    dataKey: 'dessert',
-  },
-  {
-    width: 140,
-    label: 'Логин',
-    dataKey: 'calories',
-    numeric: true,
-  },
-  {
-    width: 140,
-    label: 'Роль',
-    dataKey: 'fat',
-    numeric: true,
-  },
-  {
-    width: 140,
-    label: 'Цех',
-    dataKey: 'carbs',
-    numeric: true,
-  },
-];
+  const [data , setData] = useState([])
 
-const rows = Array.from({ length: 200 }, (_, index) => {
-  const randomSelection = sample[Math.floor(Math.random() * sample.length)];
-  return createData(index, ...randomSelection);
-});
+  useEffect(() => {
+    dispatch(getUsersList())
+      .then(res => setData(res?.payload))
+  },[])
+  
 
-const VirtuosoTableComponents = {
-  Scroller: React.forwardRef((props, ref) => (
-    <TableContainer component={Paper} {...props} ref={ref} />
-  )),
-  Table: (props) => (
-    <Table {...props} sx={{ borderCollapse: 'separate', tableLayout: 'fixed' }} />
-  ),
-  TableHead,
-  TableRow: ({ item: _item, ...props }) => <TableRow {...props} />,
-  TableBody: React.forwardRef((props, ref) => <TableBody {...props} ref={ref} />),
-};
-
-function fixedHeaderContent() {
   return (
-    <TableRow>
-      {columns.map((column) => (
-        <TableCell
-          key={column.dataKey}
-          variant="head"
-          align={column.numeric || false ? 'right' : 'left'}
-          style={{ width: column.width }}
-          sx={{
-            backgroundColor: '#677ca9',
-            color: 'white',
-          }}
-        >
-          {column.label}
-        </TableCell>
-      ))}
-    </TableRow>
-  );
+    <Wrapper>
+      <TableContainer sx={{ background: "#fff", display: "flex", justifyContent: "flex-start" }}>
+        <Table>
+          <TableHead>
+            <TableRow sx={{ background: "rgba(248, 250, 252, 1)" }}>
+              <TableCell sx={thStyle}>Имя </TableCell>
+              <TableCell sx={thStyle}>Логин </TableCell>
+              <TableCell sx={thStyle}>Роль </TableCell>
+              <TableCell sx={thStyle}>Цех </TableCell>
+              {/* <TableCell sx={thStyle}>Действие</TableCell> */}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {
+              status === "pending" ? PendingTable({ rowsNumber: 6, quantity: 4 }) :
+                data?.length > 0 && data?.map((row) => {
+                  return (
+                    <TableRow key={row?.id} hover>
+                      <TableCell sx={tdStyle}>{row?.name} </TableCell>
+                      <TableCell sx={tdStyle}>{row?.login} </TableCell>
+                      <TableCell sx={tdStyle}>{row?.role} </TableCell>
+                      <TableCell sx={tdStyle}>{row?.zeh} </TableCell>
+                    </TableRow>
+                  );
+                })
+            }
+          </TableBody>
+        </Table>
+      </TableContainer>
+      {data?.length < 1 && status !== "pending" && <p style={{ textAlign: "center", margin: "20px 0", fontSize: "17px", fontWeight: "500" }}>(Ничего не найдено)</p>}
+    </Wrapper>
+  )
 }
 
-function rowContent(_index, row) {
-  return (
-    <React.Fragment>
-      {data.map((column) => (
-        <TableCell
-          key={column.dataKey}
-          align={column.numeric || false ? 'right' : 'left'}
-        >
-          {row[column.dataKey]}
-        </TableCell>
-      ))}
-    </React.Fragment>
-  );
-}
+export default UsersTable
 
-export default function UserTable({height , rows}) {
-  return (
-    <Paper style={{ height: height, width: '100%' }}>
-      <TableVirtuoso
-        data={rows}
-        components={VirtuosoTableComponents}
-        fixedHeaderContent={fixedHeaderContent}
-        itemContent={rowContent}
-      />
-    </Paper>
-  );
-}
+const Wrapper = styled("div")`
+  background: white;
+  padding-bottom: 100px;
+  margin-top: 20px;
+  border-radius: 10px 10px 0 0;
+  
+  .title {
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+  }
+  
+  h2 {
+    padding: 29px 0 24px 29px;
+    font-weight: 500;
+  }
+  th svg{
+    margin-bottom: -7px;
+  }
+`

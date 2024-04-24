@@ -52,6 +52,18 @@ export const getZehsList = createAsyncThunk(
     }
 )
 
+export const getUsersList = createAsyncThunk(
+    "admin/getUsersList",
+    async(_,{rejectWithValue}) => {
+        try {
+            const {data} = await axiosInstance.get("/user")
+            return data
+        } catch (error) {
+            return rejectWithValue(error?.detail)
+        }
+    }
+)
+
 export const createRole = createAsyncThunk(
     'admin/createRole',
     async(props,{rejectWithValue}) => {
@@ -72,10 +84,12 @@ const adminSlice = createSlice({
         create_user_status:"",
         getRolesList_status:"",
         getZehsList_status:"",
-        create_role_status:"",
+        create_role_status: "",
+        getUsersList_status: "",
 
         roles:[],
-        zehs_list:[]
+        zehs_list: [],
+        users_list: [],
     },
     reducers: {
         clearStatus:(state) => {
@@ -84,6 +98,7 @@ const adminSlice = createSlice({
             state.getRolesList_status = ""
             state.getZehsList_status = ""
             state.create_role_status = ""
+            state.getUsersList_status = ""
             
         }
     },
@@ -139,6 +154,17 @@ const adminSlice = createSlice({
         })
         .addCase(createRole.rejected, (state, {payload}) => {
             state.create_role_status = "rejected"
+        })
+        // ------------------------------------------------------ //
+        .addCase(getUsersList.pending, (state) => {
+            state.getUsersList_status = "pending"
+        })
+        .addCase(getUsersList.fulfilled, (state, {payload}) => {
+            state.getUsersList_status = "success"
+            state.users_list = payload
+        })
+        .addCase(getUsersList.rejected, (state, {payload}) => {
+            state.getUsersList_status = "rejected"
         })
     }
 })
